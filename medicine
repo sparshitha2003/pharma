@@ -1,0 +1,96 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Medicine {
+    String name;
+    String manufacturer;
+    double price;
+
+    public Medicine(String name, String manufacturer, double price) {
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.price = price;
+    }
+}
+
+public class PharmacySystem {
+    public static void main(String[] args) {
+        ArrayList<Medicine> medicineList = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nPharmacy System Menu:");
+            System.out.println("1. Add Medicine");
+            System.out.println("2. View Medicine List");
+            System.out.println("3. Search Medicine");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    addMedicine(scanner, medicineList);
+                    break;
+                case 2:
+                    viewMedicineList(medicineList);
+                    break;
+                case 3:
+                    searchMedicine(scanner, medicineList);
+                    break;
+                case 4:
+                    System.out.println("Exiting Pharmacy System. Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+
+    private static void addMedicine(Scanner scanner, ArrayList<Medicine> medicineList) {
+        System.out.print("Enter Medicine Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Manufacturer: ");
+        String manufacturer = scanner.nextLine();
+
+        System.out.print("Enter Price: ");
+        double price = scanner.nextDouble();
+
+        Medicine medicine = new Medicine(name, manufacturer, price);
+        medicineList.add(medicine);
+
+        System.out.println("Medicine added successfully!");
+    }
+
+    private static void viewMedicineList(ArrayList<Medicine> medicineList) {
+        if (medicineList.isEmpty()) {
+            System.out.println("Medicine list is empty.");
+        } else {
+            System.out.println("\nMedicine List:");
+            for (Medicine medicine : medicineList) {
+                System.out.println("Name: " + medicine.name + ", Manufacturer: " + medicine.manufacturer + ", Price: " + medicine.price);
+            }
+        }
+    }
+
+    private static void searchMedicine(Scanner scanner, ArrayList<Medicine> medicineList) {
+        System.out.print("Enter Medicine Name to search: ");
+        String searchName = scanner.nextLine();
+
+        boolean found = false;
+        for (Medicine medicine : medicineList) {
+            if (medicine.name.equalsIgnoreCase(searchName)) {
+                System.out.println("Medicine found:");
+                System.out.println("Name: " + medicine.name + ", Manufacturer: " + medicine.manufacturer + ", Price: " + medicine.price);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Medicine not found.");
+        }
+    }
+}
